@@ -1,0 +1,11 @@
+#connect-four-grid {
+    height: 90%;
+    margin: 3% 35%;
+    width: 30%;
+}
+
+#connect-four-grid tr td {
+    width: 30px;
+    height: 30px;
+    border: 1px solid black;
+}
