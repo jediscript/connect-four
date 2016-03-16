@@ -1,7 +1,7 @@
 /*
  * @goal        : Create a connect-four game - https://en.wikipedia.org/wiki/Connect_Four
  * @author      : jed[dot]lagunday[at]gmail[dot]com
- * @description : A "Connect Four" game in a classic 6 x 7 board or grid, built using JS.
+ * @description : A "Connect Four" game in a classic 6 x 7 board or grid, built using JS, HTML table, a little bit of CSS, and a mixture of Luck. :)
  * @specs       : (a) Either player should be able to win by making 4 in a row in a vertical, horizontal or diagonal (either direction) pattern.
  *                (b) The winner should be immediately announced once there is one, and no moves can be taken after.
  *                (c) It should be possible to reach a draw state. A draw state is when there is no possible move left for either player and there is no winner.
@@ -18,8 +18,10 @@
         for (var i = 0; i < gameGrid.rows.length; i++) {
             for (var j = 0; j < gameGrid.rows[i].cells.length; j++) {
                 gameGrid.rows[i].cells[j].onclick = function () {
-                    placeDisc(getDigitFromString(this.id), currentPlayer()); //disc is place here
-                    nextPlayer(currentPlayer()); //pass the turn after placing disc
+                    if (gameGrid != null) {
+                        placeDisc(getDigitFromString(this.id), currentPlayer()); //imaginary disc is place here
+                        nextPlayer(currentPlayer()); //pass the turn after placing imaginary disc
+                    }
                 };
             }
         }
@@ -40,7 +42,7 @@
         this.getCurrentPlayer = function () {
             return this.currentPlayer;
         }
-    }
+    };
 
     var player1 = new Player("X");
     var player2 = new Player("O");
@@ -81,13 +83,87 @@
             //if it have an empty slot, put the imaginary disc there
             if (document.getElementById("cell_"+start+col).innerHTML == "" || document.getElementById("cell_"+start+col).innerHTML == "undefined") {
                 document.getElementById("cell_"+start+col).innerHTML = player;
-                return;
+                break;
             }
             start = prevChar(start);
         };
+
+        //check if a placement is FTW
+        var won = checkWinner(start, col, player);
+        //console.log("won => " + won);
+        if (won != "no") {
+            //disable the grid / board when a winner is declared
+            gameGrid = null;
+            alert ("Player " + player + " wins!");
+        }
+
+        return;
     };
 
-    var checkWinner = function () {
+    var checkWinnerDiagonal = function (row, col, player) {
+        return "no";
+    };
+
+    var checkWinnerVertical = function (col, player) {
+        var series = 0;
+        var currentRow = "f";
+        for (var i = 1; i < 7; i++) {
+            if (document.getElementById("cell_" + currentRow + col).innerHTML == player) {
+                series += 1;
+                if (series >= 4) {
+                    return player;
+                }
+            } else {
+                series = 0;
+            }
+            currentRow = prevChar(currentRow);
+        }
+        return "no";
+    };
+
+    var checkWinnerHorizontal = function (row, player) {
+        var series = 0;
+        for (var i = 1; i < 8; i++) {
+            if (document.getElementById("cell_" + row + i).innerHTML == player) {
+                series += 1;
+                if (series >= 4) {
+                    return player;
+                }
+            } else {
+                series = 0;
+            }
+        }
+        return "no";
+    };
+
+    var checkWinner = function (row, col, player) {
+        var winner = checkWinnerHorizontal(row, player);
+        if (winner != "no") {
+            return winner;
+        }
+        winner = checkWinnerVertical(col, player);
+        if (winner != "no") {
+            return winner;
+        }
+        winner = checkWinnerDiagonal(row, col, player);
+        if (winner != "no") {
+            return winner;
+        }
+
+        //console.log("winner => ", winner);
+
+        //check if it is a draw
+        var isDraw = checkDraw();
+        if (isDraw) {
+            gameGrid = null;
+            alert("Wow! It's a tie!");
+        }
+        return "no";
+    };
+
+    var checkDraw = function () {
+        //returns boolean
+        return false;
     };
 
 })();
