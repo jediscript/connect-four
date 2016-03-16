@@ -25,6 +25,6 @@ clone the repository
 
      git clone https://github.com/jediscript/connect-four.git
 
-Open the <DIRECTORY_PATH>/connect-four/connect-four.html in your browser.
+Open the \<DIRECTORY_PATH\>/connect-four/connect-four.html in your browser.
 
 ## Demo
