@@ -5,7 +5,10 @@
     <link rel="stylesheet" type="text/css" href="connect-four.css">
 </head>
 <body>
-    <div class="box-grid">    
+    <div class="box-grid">
+        <div id="game-title">
+            <strong>Connect Four</strong>
+        </div>   
         <!-- 6 x 7 Grid-->
         <table id="connect-four-grid">
             <tr id="first-row">
@@ -64,6 +67,17 @@
                 <td id="cell_f7"></td>
             </tr>
         </table>
+        <div id="button_wrapper">
+            <button id="restart_game" onclick="document.location.reload(true);">Restart</button>       
+        </div>
+        <strong>INSTRUCTIONS</strong><br/>
+        <ul>
+            <li>Game starts with Player 1 as "X".</li>
+            <li>Player 2 plays as "O"</li>
+            <li>This is a turn-based game. Each player plays after every other turn.</li>
+            <li>A player wins if it connect four series in diagonal, horizontal, or vertical.</li>
+            <li>A draw decision will occur if every slot is filled and a winner is not declared.</li>
+        </ul>
     </div>
     <script type="text/javascript" src="connect-four.js"></script>
 </body>

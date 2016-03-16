@@ -1,12 +1,24 @@
 #connect-four-grid {
-    height: 90%;
-    margin: 3% 35%;
-    width: 30%;
+    height: 100%;
+    width: 100%;
 }
 
 #connect-four-grid tr td {
     width: 30px;
     height: 30px;
     border: 1px solid black;
+    text-align: center;
+}
+
+.box-grid {
+    width: 30%;
+    margin: 0 35%;
+}
+
+#button_wrapper {
+    text-align: center;
+}
+
+#game-title {
     text-align: center;
 }
