@@ -1,13 +1,3 @@
-/*
- * @goal        : Create a connect-four game - https://en.wikipedia.org/wiki/Connect_Four
- * @author      : jed[dot]lagunday[at]gmail[dot]com
- * @description : A "Connect Four" game in a classic 6 x 7 board or grid, built using JS, HTML table, a little bit of CSS, and a mixture of Luck. :)
- * @specs       : (a) Either player should be able to win by making 4 in a row in a vertical, horizontal or diagonal (either direction) pattern.
- *                (b) The winner should be immediately announced once there is one, and no moves can be taken after.
- *                (c) It should be possible to reach a draw state. A draw state is when there is no possible move left for either player and there is no winner.
- *                (d) It should not falsely and/or prematurely declare a player as a winner or a draw.
- */
-
 "use strict";
 
 (function () {
@@ -76,6 +66,10 @@
         return String.fromCharCode(letter.charCodeAt(0) - 1);
     };
 
+    var nextChar = function (letter) {
+        return String.fromCharCode(letter.charCodeAt(0) + 1);
+    };
+
     var placeDisc = function (col, player) {
         //check if the selected column has an empty slot
         var start = "f"; //let's start checking from the bottom
@@ -90,7 +84,6 @@
 
         //check if a placement is FTW
         var won = checkWinner(start, col, player);
-        //console.log("won => " + won);
         if (won != "no") {
             //disable the grid / board when a winner is declared
             gameGrid = null;
@@ -101,6 +94,66 @@
     };
 
     var checkWinnerDiagonal = function (row, col, player) {
+        var currentRow;
+        var currentCol = 0;
+        var rows = ["f", "e", "d", "c", "b", "a"];
+        var cols = [1, 2, 3, 4, 5, 6, 7];
+
+        //front-slash diagonal (/) southwest to northeast
+        for (var h = 0; h < cols.length; h++) {
+            for (var i = 0; i < rows.length; i++) {
+                currentRow = rows[i];
+                var series = 0;
+                for (var j = 1; j < 7; j++) {
+                    currentCol = parseInt(h) + parseInt(j);
+                    if (currentCol > 7) {
+                        break;
+                    }
+                    if (document.getElementById("cell_" + currentRow + currentCol).innerHTML == player){
+                        series += 1;
+                        if (series >= 4) {
+                            return player;
+                        }
+                    } else {
+                        series = 0;
+                    }
+                    currentRow = prevChar(currentRow); //move to another row
+                    //out of bounds
+                    if (rows.indexOf(currentRow) < 0 || cols.indexOf(currentCol) < 0) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        // back-slash diagonal (\) northwest to southeast
+        var normRows = rows.reverse();
+        for (var h = 0; h < cols.length; h++) {
+            for (var i = 0; i < normRows.length; i++) {
+                currentRow = normRows[i];
+                var series = 0;
+                for (var j = 1; j < 7; j++) {
+                    currentCol = parseInt(h) + parseInt(j);
+                    if (currentCol > 7) {
+                        break;
+                    }
+                    if (document.getElementById("cell_" + currentRow + currentCol).innerHTML == player){
+                        series += 1;
+                        if (series >= 4) {
+                            return player;
+                        }
+                    } else {
+                        series = 0;
+                    }
+                    currentRow = nextChar(currentRow); //move to another row
+                    //out of bounds
+                    if (normRows.indexOf(currentRow) < 0 || cols.indexOf(currentCol) < 0) {
+                        break;
+                    }
+                }
+            }
+        }
+
         return "no";
     };
 
@@ -149,9 +202,6 @@
         if (winner != "no") {
             return winner;
         }
-
-        //console.log("winner => ", winner);
-
         //check if it is a draw
         var isDraw = checkDraw();
         if (isDraw) {
@@ -162,8 +212,18 @@
     };
 
     var checkDraw = function () {
-        //returns boolean
-        return false;
+        var rows = ["f", "e", "d", "c", "b", "a"];
+        var cols = ["1", "2", "3", "4", "5", "6", "7"];
+        var isDraw = true;
+
+        for (var i = 0; i < rows.length; i++) {
+            for (var j = 1; j < 7; j++) {
+                if (document.getElementById("cell_"+ rows[i] + j).innerHTML == "" || document.getElementById("cell_"+ rows[i] + j).innerHTML == "undefined"){
+                    isDraw = false;
+                }
+            }
+        }
+        return isDraw;
     };
 
 })();
