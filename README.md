@@ -22,7 +22,8 @@ Reference: [https://en.wikipedia.org/wiki/Connect_Four](https://en.wikipedia.org
 ## Installation
 
 clone the repository
-    git clone https://github.com/jediscript/connect-four.git
+
+     git clone https://github.com/jediscript/connect-four.git
 
 Open the <DIRECTORY_PATH>/connect-four/connect-four.html in your browser.
 
