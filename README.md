@@ -28,3 +28,10 @@ clone the repository
 Open the \<DIRECTORY_PATH\>/connect-four/connect-four.html in your browser.
 
 ## Demo
+
+[https://fierce-cliffs-19683.herokuapp.com/](https://fierce-cliffs-19683.herokuapp.com/)
+
+
+## Roadmap
+
+* AI or "Vs Computer mode"
