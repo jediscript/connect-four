@@ -22,3 +22,11 @@
 #game-title {
     text-align: center;
 }
+
+table tr td.red {
+    background-color: red;
+}
+
+table tr td.blue {
+    background-color: blue;
+}

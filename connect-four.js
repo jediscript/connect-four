@@ -77,6 +77,11 @@
             //if it have an empty slot, put the imaginary disc there
             if (document.getElementById("cell_"+start+col).innerHTML == "" || document.getElementById("cell_"+start+col).innerHTML == "undefined") {
                 document.getElementById("cell_"+start+col).innerHTML = player;
+                if (player == player1.player) {
+                    document.getElementById("cell_"+start+col).className = "red";
+                } else {
+                    document.getElementById("cell_"+start+col).className = "blue";
+                }
                 break;
             }
             start = prevChar(start);
