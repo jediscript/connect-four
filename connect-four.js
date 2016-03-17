@@ -8,9 +8,9 @@
         for (var i = 0; i < gameGrid.rows.length; i++) {
             for (var j = 0; j < gameGrid.rows[i].cells.length; j++) {
                 gameGrid.rows[i].cells[j].onclick = function () {
-                    if (gameGrid != null) {
+                    if (gameGrid !== null) {
                         placeDisc(getDigitFromString(this.id), currentPlayer()); //imaginary disc is place here
-                        nextPlayer(currentPlayer()); //pass the turn after placing imaginary disc
+                        nextPlayer(); //pass the turn after placing imaginary disc
                     }
                 };
             }
@@ -22,16 +22,16 @@
         this.currentPlayer = false;
 
         this.assignAsCurrent = function () {
-            return this.currentPlayer = true;
+            this.currentPlayer = true;
         };
 
         this.unassignAsCurrent = function () {
-            return this.currentPlayer = false;
+            this.currentPlayer = false;
         };
 
         this.getCurrentPlayer = function () {
             return this.currentPlayer;
-        }
+        };
     };
 
     var player1 = new Player("X");
@@ -48,7 +48,7 @@
         }
     };
 
-    var nextPlayer = function (player) {
+    var nextPlayer = function () {
         if (player1.getCurrentPlayer()) {
             player1.unassignAsCurrent();
             player2.assignAsCurrent();
@@ -75,7 +75,7 @@
         var start = "f"; //let's start checking from the bottom
         for (var i = 0; i < 6; i++) {
             //if it have an empty slot, put the imaginary disc there
-            if (document.getElementById("cell_"+start+col).innerHTML == "" || document.getElementById("cell_"+start+col).innerHTML == "undefined") {
+            if (document.getElementById("cell_"+start+col).innerHTML === "" || document.getElementById("cell_"+start+col).innerHTML == "undefined") {
                 document.getElementById("cell_"+start+col).innerHTML = player;
                 if (player == player1.player) {
                     document.getElementById("cell_"+start+col).className = "red";
@@ -85,14 +85,14 @@
                 break;
             }
             start = prevChar(start);
-        };
+        }
 
         //check if a placement is FTW
         var won = checkWinner(start, col, player);
         if (won != "no") {
             //disable the grid / board when a winner is declared
             gameGrid = null;
-            alert ("Player " + player + " wins!");
+            alert("Player " + player + " wins!");
         }
 
         return;
@@ -133,22 +133,22 @@
 
         // back-slash diagonal (\) northwest to southeast
         var normRows = rows.reverse();
-        for (var h = 0; h < cols.length; h++) {
-            for (var i = 0; i < normRows.length; i++) {
-                currentRow = normRows[i];
-                var series = 0;
-                for (var j = 1; j < 7; j++) {
-                    currentCol = parseInt(h) + parseInt(j);
+        for (var k = 0; k < cols.length; k++) {
+            for (var l = 0; l < normRows.length; l++) {
+                currentRow = normRows[l];
+                var series1 = 0;
+                for (var m = 1; m < 7; m++) {
+                    currentCol = parseInt(k) + parseInt(m);
                     if (currentCol > 7) {
                         break;
                     }
                     if (document.getElementById("cell_" + currentRow + currentCol).innerHTML == player){
-                        series += 1;
-                        if (series >= 4) {
+                        series1 += 1;
+                        if (series1 >= 4) {
                             return player;
                         }
                     } else {
-                        series = 0;
+                        series1 = 0;
                     }
                     currentRow = nextChar(currentRow); //move to another row
                     //out of bounds
@@ -218,12 +218,11 @@
 
     var checkDraw = function () {
         var rows = ["f", "e", "d", "c", "b", "a"];
-        var cols = ["1", "2", "3", "4", "5", "6", "7"];
         var isDraw = true;
 
         for (var i = 0; i < rows.length; i++) {
             for (var j = 1; j < 7; j++) {
-                if (document.getElementById("cell_"+ rows[i] + j).innerHTML == "" || document.getElementById("cell_"+ rows[i] + j).innerHTML == "undefined"){
+                if (document.getElementById("cell_"+ rows[i] + j).innerHTML === "" || document.getElementById("cell_"+ rows[i] + j).innerHTML == "undefined"){
                     isDraw = false;
                 }
             }
